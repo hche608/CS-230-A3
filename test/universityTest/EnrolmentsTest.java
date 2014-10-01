@@ -72,12 +72,23 @@ public class EnrolmentsTest extends TestCase {
 	
 	// Enrol a valid student in an invalid paper
 	
-	
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testForExceptionsGivenNULLPaperName() {
-		myApp.enrolStudentInPaper(2044, null);
+		try {
+			myApp.enrolStudentInPaper(2044, null);
+			fail("Expected IllegalArgumentException when both args are null");
+		} catch (NullPointerException e){
+			//passed the test
+		}
+		
 	}
 	
+	/*
+	@Test(expected = NullPointerException.class)
+	public void testForExceptionsGivenNULLPaperNameMethod2() {
+		myApp.enrolStudentInPaper(2044, null);
+	}
+	*/
 	@Test(expected = IllegalArgumentException.class)
 	public void testForExceptionsGivenEmptyPaperName() {
 		myApp.enrolStudentInPaper(2044, "");
@@ -86,11 +97,22 @@ public class EnrolmentsTest extends TestCase {
 	
 	// Enrol an invalid student in an invalid paper
 	
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testForExceptionsGivenNgtiveIntegerIDAndNULLPaperName() {
-		myApp.enrolStudentInPaper(-100, null);
+		try {
+			myApp.enrolStudentInPaper(-100, null);
+			fail("Expected IllegalArgumentException when both args are null");
+		} catch (NullPointerException e){
+			//passed the test
+		}
+		
 	}
 	/*
+	@Test(expected = NullPointerException.class)
+	public void testForExceptionsGivenNgtiveIntegerIDAndNULLPaperNameMethod2() {
+		myApp.enrolStudentInPaper(-100, null);
+	}
+	
 	@Test(expected = Error.class)
 	public void testForExceptionsGivenString() {
 		myApp.enrolStudentInPaper("100", "Math01");
@@ -153,19 +175,19 @@ public class EnrolmentsTest extends TestCase {
 
 	// Enrol a valid student in a valid paper
 	@Test
-	public void testValidStudentEnrolledInValidPaperSucceedsInvalidUsageCase1() {
+	public void testValidStudentEnrolledInValidPaperFailsInvalidUsageCase1() {
 		assertFalse("Enrol should fail for student 100 and paper 'Geol01'", myApp.enrolStudentInPaper(100, "Geol01"));
 	}
 	
 	@Test
-	public void testValidStudentEnrolledInValidPaperSucceedsInvalidUsageCae2() {
+	public void testValidStudentEnrolledInValidPaperFailsInvalidUsageCae2() {
 		assertTrue("Enrol should succeed for student 1011 and paper 'Geol01'", myApp.enrolStudentInPaper(1011, "Geol01"));
-		assertFalse("Enrol should succeed for student 1011 and paper 'Geol01'", myApp.enrolStudentInPaper(1011, "Geol01"));
+		assertFalse("Enrol should fail for student 1011 and paper 'Geol01'", myApp.enrolStudentInPaper(1011, "Geol01"));
 	}
 
 	// 1 student 5 papers
 	@Test
-	public void testValidStudentEnrolledInValidPaperSucceedsInvalidUsageCae3() {
+	public void testValidStudentEnrolledInValidPaperFailsInvalidUsageCae3() {
 		assertTrue("Enrol should succeed for student 1011 and paper 'Math01'", myApp.enrolStudentInPaper(1011, "Math01"));
 		assertTrue("Enrol should succeed for student 1011 and paper 'Phys01'", myApp.enrolStudentInPaper(1011, "Phys01"));
 		assertTrue("Enrol should succeed for student 1011 and paper 'Chem01'", myApp.enrolStudentInPaper(1011, "Chem01"));
@@ -173,9 +195,12 @@ public class EnrolmentsTest extends TestCase {
 		assertFalse("Enrol should fail for student 1011 and paper 'Geol01'", myApp.enrolStudentInPaper(1011, "Geol01"));
 	}
 	
+	
+	
 	@Test
 	public void testValidStudentEnrolledInValidPaperStudentHasOnePaperInvalidUsage() {
 		myApp.enrolStudentInPaper(100, "Geol01");
+		assertFalse("Enrol should fail for student 100 and paper 'Geol01'", myApp.enrolStudentInPaper(100, "Geol01"));
 		assertFalse("Student 100 should have paper Geol01", myApp.listPapersForStudent(100).contains("Geol01"));		
 		assertFalse("Paper Geol01 should have student 100", myApp.listStudentIdsForPaper("Geol01").contains(100));		
 	}
