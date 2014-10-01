@@ -163,12 +163,23 @@ public class EnrolmentsTest extends TestCase {
 		assertFalse("Enrol should succeed for student 1011 and paper 'Geol01'", myApp.enrolStudentInPaper(1011, "Geol01"));
 	}
 
+	// 1 student 5 papers
+	@Test
+	public void testValidStudentEnrolledInValidPaperSucceedsInvalidUsageCae3() {
+		assertTrue("Enrol should succeed for student 1011 and paper 'Math01'", myApp.enrolStudentInPaper(1011, "Math01"));
+		assertTrue("Enrol should succeed for student 1011 and paper 'Phys01'", myApp.enrolStudentInPaper(1011, "Phys01"));
+		assertTrue("Enrol should succeed for student 1011 and paper 'Chem01'", myApp.enrolStudentInPaper(1011, "Chem01"));
+		assertTrue("Enrol should succeed for student 1011 and paper 'Biol01'", myApp.enrolStudentInPaper(1011, "Biol01"));
+		assertFalse("Enrol should fail for student 1011 and paper 'Geol01'", myApp.enrolStudentInPaper(1011, "Geol01"));
+	}
+	
 	@Test
 	public void testValidStudentEnrolledInValidPaperStudentHasOnePaperInvalidUsage() {
 		myApp.enrolStudentInPaper(100, "Geol01");
 		assertFalse("Student 100 should have paper Geol01", myApp.listPapersForStudent(100).contains("Geol01"));		
 		assertFalse("Paper Geol01 should have student 100", myApp.listStudentIdsForPaper("Geol01").contains(100));		
 	}
+	
 	
 
 }
