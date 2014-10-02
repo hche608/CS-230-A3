@@ -18,6 +18,8 @@ package university;
  *		debug findPaperDelivery() which did return correct PaperDelivery.
  *		set some new conditions for getting correct PaperDelivery.
  *
+ *		add some codes to check if the student enrolled the paper before.
+ *
  *
  */
 

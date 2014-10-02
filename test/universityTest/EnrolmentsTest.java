@@ -201,6 +201,10 @@ public class EnrolmentsTest extends TestCase {
 		assertFalse("Paper Geol01 should have student 100", myApp.listStudentIdsForPaper("Geol01").contains(100));		
 	}
 	
-	
+	@Test
+	public void testValidStudentEnrolledInValidPaperFailsInvalidUsageCae4() {
+		assertFalse("Enrol should succeed for student 333 and paper 'Geol01'", myApp.enrolStudentInPaper(333, "Geol01"));
+		assertFalse("Enrol should fail for student 33333 and paper 'Geol01'", myApp.enrolStudentInPaper(3333, "Geol01"));
+	}
 
 }
