@@ -40,7 +40,7 @@ class Student {
 		if (!hasPaper(pd)) {
 			papers[papersIndex] = pd;
 			if (papersIndex < NUM_PAPERS_MAX -1)
-				++papersIndex;
+				++papersIndex;		
 		}
 	}	
 
@@ -67,8 +67,9 @@ class Student {
 	ArrayList <String> listPaperNamesInSemester(int year, int semester) {
 		ArrayList <String> names = new ArrayList <String> ();
 		for (int i=0; i<papers.length; ++i) {
-			if ((papers[i] !=  null) && (papers[i].getYear() == year) &&  (papers[i].getSemester() == semester))
+			if ((papers[i] !=  null) && (papers[i].getYear() == year) &&  (papers[i].getSemester() == semester)){
 				names.add(papers[i].getPaperName());
+			}
 		}
 		return names;
 	}	

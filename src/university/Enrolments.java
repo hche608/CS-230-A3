@@ -1,10 +1,23 @@
 package university;
 
 /**
- * @author Diana kirk
- * @version 1.0 : September 19, 2014
- *		Minimal functionality with enrolment for current semester only.
+ * @author Hao CHEN
+ * @version 1.1 : October 02, 2014
+ *		Minimal functionality with enrollment for current semester only.
  *		Student and paper delivery data hard-coded 
+ *
+ *		Implement the code that throw 	IllegalArgumentException if 'studentId' is negative or zero
+ *										IllegalArgumentException if 'paperName' is the empty string
+ *	
+ *
+ *		remove the code throw NullPointerException if 'paperName' is null.
+ *
+ *		debug findStudentWithId() which did return correct Student.
+ *
+ *		debug findPaperDelivery() which did return correct PaperDelivery.
+ *
+ *
+ *
  */
 
 import java.util.ArrayList;
@@ -63,28 +76,45 @@ public class Enrolments {
 	 * @throws 				IllegalArgumentException if 'paperName' is the empty string
 	 * @throws				NullPointerException if 'paperName' is null
 	 */
+
 	public boolean enrolStudentInPaper(int studentId, String paperName) throws IllegalArgumentException, NullPointerException {
 		
 		Student s = null;
 		PaperDelivery pd = null;
 		boolean inputsOk = true;  // assume student will be successfully enrolled
 
+
+		//IllegalArgumentException if 'studentId' is negative or zero
+		if (studentId <= 0)
+			throw new IllegalArgumentException();
+		
+		//IllegalArgumentException if 'paperName' is the empty string
+		if (paperName.equals(""))
+			throw new IllegalArgumentException();
+		/* remove this section because it is not necessary to throw NullPointerException
 		if (paperName == null)
 			throw new NullPointerException();
-
+			*/
 		if ((s = findStudentWithId(studentId)) == null)
 			inputsOk = false; 				
-		
+
 		if ((pd = findPaperDelivery(paperName, currentYear, currentSemester)) == null)
 			inputsOk = false; 		
-	
+
+		
+		// check the student if has enrolled before
+		if(pd.hasStudent(s))
+			inputsOk = false; 
+		
+		
 		// Provided data is valid and student isn't already enrolled in maximum number of papers,
 		// enrol the student by adding student to paper and paper to student
 		if (inputsOk) {
 			
 			if (s.getNumPapersInSemester(currentYear, currentSemester) < MAX_PAPERS_PER_SEMESTER) {
 				pd.enrolStudent(s); 
-				s.enrol(pd);
+				s.enrol(pd);				
+				
 			} else
 				inputsOk = false;
 		}
@@ -129,8 +159,9 @@ public class Enrolments {
 	ArrayList <String> listPapersForStudent(int studentId, int year, int semester) {
 		Student s = findStudentWithId(studentId);
 		ArrayList <String> names = new ArrayList <String> ();
-		if (s != null)
+		if (s != null){
 			names = s.listPaperNamesInSemester(year, semester);
+		}
 		return names;
 	}
 
@@ -139,36 +170,39 @@ public class Enrolments {
 	// -- PRIVATE METHODS ---
 
 	// Get the student for 'studentId'. Returns null if not found.
+
 	private Student findStudentWithId(int studentId) { 
 		Student s = null;
 		int i = 0;
 		boolean found = false;
-		while (i < students.length) {
-			s = students[i];
+		while (i < students.length && (!found)) {
+			//s = students[i];
 			if (students[i].getId() == studentId) {
+				s = students[i];
 				found = true;
 			}
 			++i;
 		}
 	
-		return (s);
+		return s;
 	}
 
 	// Get the correct paper-year-semester instance. Returns null if not found.
 	// Assumes 'paperName' is not null.
-	private PaperDelivery findPaperDelivery(String paperName, int year, int semester) { 			
+	// return the PaperDelivery as requested name,year,semester.
+	private PaperDelivery findPaperDelivery(String paperName, int year, int semester) { 
 		PaperDelivery pd = null;
 		int i = 0;
 		boolean found = false;
 		while ((i < paperDeliveries.length) && (!found)) {
-			if (paperDeliveries[i].getPaperName().equals(paperName)) {
+			if (paperDeliveries[i].getPaperName().equals(paperName) && (paperDeliveries[i].getYear() == year) && (paperDeliveries[i].getSemester() == semester)) {
 				pd = paperDeliveries[i];
 				found = true;
+				break;
 			}
 			++i;
-		}
-			
-		return (pd);
+		}			
+		return pd;
 	}
 	
 

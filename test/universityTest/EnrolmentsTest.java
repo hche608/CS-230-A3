@@ -1,12 +1,9 @@
 package universityTest;
 
-
 import university.Enrolments;
 import junit.framework.TestCase;
 
 import org.junit.Test;
-import org.junit.Assert;
-
 
 public class EnrolmentsTest extends TestCase {
 
@@ -18,7 +15,7 @@ public class EnrolmentsTest extends TestCase {
 	}
 
 	protected void tearDown() throws Exception {
-		super.tearDown();
+        super.tearDown();
 	}
 
 	
@@ -26,49 +23,35 @@ public class EnrolmentsTest extends TestCase {
 	
 	// Enrol an invalid student in a valid paper
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testForExceptionsGivenNgtiveIntegerID() {
-		myApp.enrolStudentInPaper(-100, "Geol01");
+		try {
+			myApp.enrolStudentInPaper(-100, "Geol01");
+			fail("Expected IllegalArgumentException when 1st argu is negative");
+		} catch (IllegalArgumentException e){
+			//passed the test
+		}		
 	}
-	
-	@Test(expected = IllegalArgumentException.class)
+				
+	@Test
 	public void testForExceptionsGivenZeroID() {
-		myApp.enrolStudentInPaper(0, "Geol01");
-	}
-	
-	@Test	
-	public void testInvalidStudentEnrolledInValidPaperFailsCase1() {
-		assertFalse("\nEnrol should fail for student -100 and paper 'Geol01'", myApp.enrolStudentInPaper(-100, "Geol01"));
-	}	
-
-	@Test	
-	public void testInvalidStudentEnrolledInValidPaperFailsCase2() {
-		assertFalse("\nEnrol should fail for student 100 and paper 'Geol02'", myApp.enrolStudentInPaper(100, "Geol02"));
-	}	
-	
-	@Test
-	public void testInvalidStudentEnrolledInValidPaperStudentHasOnePaperCase1() {
-		myApp.enrolStudentInPaper(-100, "Geol01");
-		assertFalse("Student -100 should not have paper Geol01", myApp.listPapersForStudent(-100).contains("Geol01"));		
-		assertFalse("Paper Geol01 should not have student -100", myApp.listStudentIdsForPaper("Geol01").contains(-100));		
+		try {
+			myApp.enrolStudentInPaper(0, "Geol01");
+			fail("Expected IllegalArgumentException when 1st argu is zero");
+		} catch (IllegalArgumentException e){
+			//passed the test
+		}
 	}
 	
 	@Test
-	public void testInvalidStudentEnrolledInValidPaperStudentHasOnePaperCase2() {
-		myApp.enrolStudentInPaper(0, "Geol01");
-		assertFalse("Student -100 should not have paper Geol01", myApp.listPapersForStudent(0).contains("Geol01"));		
-		assertFalse("Paper Geol01 should not have student -100", myApp.listStudentIdsForPaper("Geol01").contains(0));		
-	
+	public void testForExceptionsGivenInvalidPara() {
+		try {
+			myApp.enrolStudentInPaper(000, "Geol01");
+			fail("Expected IllegalArgumentException when 1st argu is zero");
+		} catch (IllegalArgumentException e){
+			//passed the test
+		}
 	}
-	
-	@Test
-	public void testInvalidStudentEnrolledInValidPaperStudentHasOnePaperCase3() {	
-		myApp.enrolStudentInPaper(100, "Geol01");
-		assertFalse("Student -100 should not have paper Geol01", myApp.listPapersForStudent(100).contains("Geol01"));		
-		assertFalse("Paper Geol01 should not have student -100", myApp.listStudentIdsForPaper("Geol01").contains(100));		
-	}
-	
-	
 	
 	// Enrol a valid student in an invalid paper
 	
@@ -76,59 +59,44 @@ public class EnrolmentsTest extends TestCase {
 	public void testForExceptionsGivenNULLPaperName() {
 		try {
 			myApp.enrolStudentInPaper(2044, null);
-			fail("Expected IllegalArgumentException when both args are null");
+			fail("Expected NullPointerException when 2nd argu is null");
 		} catch (NullPointerException e){
 			//passed the test
 		}
-		
 	}
 	
-	/*
-	@Test(expected = NullPointerException.class)
-	public void testForExceptionsGivenNULLPaperNameMethod2() {
-		myApp.enrolStudentInPaper(2044, null);
-	}
-	*/
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testForExceptionsGivenEmptyPaperName() {
-		myApp.enrolStudentInPaper(2044, "");
+		try {
+			myApp.enrolStudentInPaper(2044, "");
+			fail("Expected IllegalArgumentException when 2nd argu is empty");
+		} catch (IllegalArgumentException e){
+			//passed the test
+		}
 	}
-	
 	
 	// Enrol an invalid student in an invalid paper
 	
 	@Test
-	public void testForExceptionsGivenNgtiveIntegerIDAndNULLPaperName() {
+	public void testForExceptionsGivenNgtiveIntegerIDEmptyPaper() {
 		try {
-			myApp.enrolStudentInPaper(-100, null);
-			fail("Expected IllegalArgumentException when both args are null");
-		} catch (NullPointerException e){
+			myApp.enrolStudentInPaper(-100, "");
+			fail("Expected IllegalArgumentException when 1st argu is negative");
+		} catch (IllegalArgumentException e){
 			//passed the test
 		}
+	}
 		
-	}
-	/*
-	@Test(expected = NullPointerException.class)
-	public void testForExceptionsGivenNgtiveIntegerIDAndNULLPaperNameMethod2() {
-		myApp.enrolStudentInPaper(-100, null);
-	}
-	
-	@Test(expected = Error.class)
-	public void testForExceptionsGivenString() {
-		myApp.enrolStudentInPaper("100", "Math01");
-	}
-	*/
-	@Test(expected = IllegalArgumentException.class)
-	public void testForExceptionsGivenZeroIDAndEmptyPaperName() {
-		myApp.enrolStudentInPaper(0, "");
-	}
-			
-	
 	@Test
-	public void testInvalidStudentEnrolledInInvalidPaperFailsCase2() {
-		assertFalse("Enrol should unsucceed for student -100 and paper \"\"", myApp.enrolStudentInPaper(-100, ""));		
+	public void testForExceptionsGivenNgtiveIntegerIDNullPaper() {
+		try {
+			myApp.enrolStudentInPaper(0, null);
+			fail("Expected IllegalArgumentException when 1st argu is negative");
+		} catch (IllegalArgumentException e){
+			//passed the test
+		}
 	}
-	
+		
 	// --- VALID PARAMETERS - BOUNDARY VALUES ---
 	
 	// Enrol a valid student in a valid paper
@@ -143,16 +111,17 @@ public class EnrolmentsTest extends TestCase {
 	}
 	
 	@Test
-	public void testValidStudentEnrolledInValidPaperStudentHasOnePaperBoundaryValues() {
+	public void testValidStudentEnrolledInValidPaperStudentHasOnePaperBoundaryValuesCase1() {
 		myApp.enrolStudentInPaper(1011, "Geol01");
 		assertTrue("Student 1011 should have paper Geol01", myApp.listPapersForStudent(1011).contains("Geol01"));		
 		assertTrue("Paper Geol01 should have student 1011", myApp.listStudentIdsForPaper("Geol01").contains(1011));		
+	}
 	
+	@Test
+	public void testValidStudentEnrolledInValidPaperStudentHasOnePaperBoundaryValuesCase2() {
 		myApp.enrolStudentInPaper(2044, "Math01");
 		assertTrue("Student 2044 should have paper Math01", myApp.listPapersForStudent(2044).contains("Math01"));		
 		assertTrue("Paper Math01 should have student 2044", myApp.listStudentIdsForPaper("Math01").contains(2044));		
-	
-	
 	}
 
 	// --- VALID PARAMETERS - MID-RANGE ---
