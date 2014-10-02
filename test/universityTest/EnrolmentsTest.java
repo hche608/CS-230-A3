@@ -139,6 +139,33 @@ public class EnrolmentsTest extends TestCase {
 		assertTrue("Paper Phys01 should have student 2135", myApp.listStudentIdsForPaper("Phys01").contains(2135));		
 	}
 	
+	@Test
+	public void testValidStudentEnrolledInValidPaperStudentHasPapers() {
+		myApp.enrolStudentInPaper(2135, "Phys01");
+		assertTrue("Student 2135 should have paper Phys01", myApp.listPapersForStudent(2135).contains("Phys01"));		
+		assertTrue("Paper Phys01 should have student 2135", myApp.listStudentIdsForPaper("Phys01").contains(2135));		
+		
+		myApp.enrolStudentInPaper(2135, "Math01");
+		assertTrue("Student 2135 should have paper Math01", myApp.listPapersForStudent(2135).contains("Math01"));		
+		assertTrue("Paper Math01 should have student 2135", myApp.listStudentIdsForPaper("Math01").contains(2135));	
+		
+		myApp.enrolStudentInPaper(2135, "Biol01");
+		assertTrue("Student 2135 should have paper Biol01", myApp.listPapersForStudent(2135).contains("Biol01"));		
+		assertTrue("Paper Biol01 should have student 2135", myApp.listStudentIdsForPaper("Biol01").contains(2135));	
+		
+		myApp.enrolStudentInPaper(2135, "Chem01");
+		assertTrue("Student 2135 should have paper Chem01", myApp.listPapersForStudent(2135).contains("Chem01"));		
+		assertTrue("Paper Chem01 should have student 2135", myApp.listStudentIdsForPaper("Chem01").contains(2135));	
+		
+		
+		System.out.println(myApp.listPapersForStudent(2135));
+		assertEquals(myApp.listPapersForStudent(2135).get(0), "Phys01");
+		assertEquals(myApp.listPapersForStudent(2135).get(1), "Math01");
+		assertEquals(myApp.listPapersForStudent(2135).get(2), "Biol01");
+		assertEquals(myApp.listPapersForStudent(2135).get(3), "Chem01");
+		
+	}
+	
 	
 	// --- VALID PARAMETERS - INVALID USAGE ---
 

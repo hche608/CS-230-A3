@@ -12,10 +12,11 @@ package university;
  *
  *		remove the code throw NullPointerException if 'paperName' is null.
  *
- *		debug findStudentWithId() which did return correct Student.
+ *		debug findStudentWithId() which did return correct Student. 
+ *		Get the student for 'studentId'. Returns null if not found.
  *
  *		debug findPaperDelivery() which did return correct PaperDelivery.
- *
+ *		set some new conditions for getting correct PaperDelivery.
  *
  *
  */
